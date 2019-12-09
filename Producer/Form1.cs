@@ -106,11 +106,14 @@ namespace Producer
                                      arguments: null);
 
                 var jsonObj = JsonConvert.SerializeObject(fileChunk);
-                var body = Encoding.UTF8.GetBytes(jsonObj);                
+                var body = Encoding.UTF8.GetBytes(jsonObj);
+
+                var properties = channel.CreateBasicProperties();
+                properties.Persistent = true;
 
                 channel.BasicPublish(exchange: "",
                                      routingKey: "files",
-                                     basicProperties: null,
+                                     basicProperties: properties,
                                      body: body);
             }
         }
